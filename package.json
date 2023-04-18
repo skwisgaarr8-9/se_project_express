@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/skwisgaarr8-9/se_project_express#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.0.4",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "eslint": "^8.38.0",
