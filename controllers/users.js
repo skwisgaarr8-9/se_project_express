@@ -1,34 +1,32 @@
 const User = require("../models/user");
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
+    .orFail()
     .then((users) => res.send({ data: users }))
-    .catch(() => {
-      res.status(500).send({ message: "Error" });
+    .catch((err) => {
+      next(err);
     });
 };
 
-module.exports.getUser = (req, res) => {
-  User.findById(req.params.id)
+module.exports.getUser = (req, res, next) => {
+  User.findById(req.params.userId)
+    .orFail()
     .then((user) => {
-      if (!user) {
-        res.send({ message: "Requested resource not found" });
-        return;
-      }
       res.send({ data: user });
     })
-    .catch(() => {
-      res.status(500).send({ message: "Error" });
+    .catch((err) => {
+      next(err);
     });
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const { name, avatar } = req.body;
   User.create({ name, avatar })
     .then((user) => {
       res.send({ data: user });
     })
-    .catch(() => {
-      res.status(500).send({ message: "Error" });
+    .catch((err) => {
+      next(err);
     });
 };
