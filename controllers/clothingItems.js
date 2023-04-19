@@ -2,7 +2,6 @@ const ClothingItem = require("../models/clothingItem");
 
 module.exports.getClothingItems = (req, res, next) => {
   ClothingItem.find({})
-    .orFail()
     .then((items) => {
       res.send(items);
     })
