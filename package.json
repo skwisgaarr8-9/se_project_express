@@ -20,6 +20,8 @@
   "homepage": "https://github.com/skwisgaarr8-9/se_project_express#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "helmet": "^6.1.5",
     "mongoose": "^7.0.4",
     "validator": "^13.9.0"
   },
