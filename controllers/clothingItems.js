@@ -1,4 +1,5 @@
 const ClothingItem = require("../models/clothingItem");
+const { ForbiddenError } = require("../utils/ForbiddenError");
 
 module.exports.getClothingItems = (req, res, next) => {
   ClothingItem.find({})
@@ -22,10 +23,21 @@ module.exports.createClothingItem = (req, res, next) => {
 };
 
 module.exports.deleteClothingItem = (req, res, next) => {
-  ClothingItem.findByIdAndRemove(req.params.itemId)
+  ClothingItem.findById(req.params.itemId)
     .orFail()
     .then((item) => {
-      res.send({ data: item });
+      if (item.owner.toString() === req.user._id) {
+        ClothingItem.findByIdAndRemove(item._id)
+          .orFail()
+          .then(() => {
+            res.send({ data: item });
+          })
+          .catch((err) => {
+            next(err);
+          });
+      } else {
+        throw new ForbiddenError("Access denied");
+      }
     })
     .catch((err) => {
       next(err);
