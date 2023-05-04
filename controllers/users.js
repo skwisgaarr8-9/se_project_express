@@ -19,8 +19,8 @@ module.exports.createUser = (req, res, next) => {
     .hash(password, 10)
     .then((hash) => User.create({ name, avatar, email, password: hash }))
     .then((user) => {
-      const { name, avatar } = user;
-      const newUser = { name, avatar };
+      const { userName, userAvatar } = user;
+      const newUser = { userName, userAvatar };
       res.send({ data: newUser });
     })
     .catch((err) => {

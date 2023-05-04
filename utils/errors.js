@@ -42,7 +42,7 @@ module.exports.handleError = (err, req, res, next) => {
     });
     return;
   }
-  console.error(err);
+
   res.status(DEFAULT).send({
     message: "500 -- An error has occurred on the server",
   });
