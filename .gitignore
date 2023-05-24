@@ -1,7 +1,8 @@
-# Logs
+# Logs; *.log ignores all types of log files
 logs
 *.log
 npm-debug.log*
+
 
 # Dependency directory
 node_modules

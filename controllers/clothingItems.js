@@ -1,5 +1,5 @@
-const ClothingItem = require("../models/clothingItem");
-const { ForbiddenError } = require("../utils/ForbiddenError");
+const ClothingItem = require('../models/clothingItem');
+const { ForbiddenError } = require('../utils/ForbiddenError');
 
 module.exports.getClothingItems = (req, res, next) => {
   ClothingItem.find({})
@@ -36,7 +36,7 @@ module.exports.deleteClothingItem = (req, res, next) => {
             next(err);
           });
       } else {
-        throw new ForbiddenError("Access denied");
+        throw new ForbiddenError('Access denied');
       }
     })
     .catch((err) => {
