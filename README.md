@@ -15,3 +15,8 @@ This back-end project is focused on creating a server for the WTWR application. 
 `npm run start` — to launch the server
 
 `npm run dev` — to launch the server with the hot reload feature
+
+## Deployment
+
+- The domain for the deployed frontend is at: https://wtwr.jumpingcrab.com
+- The domain for the deployed backend is at: https://api.wtwt.jumpingcrab.com
