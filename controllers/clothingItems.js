@@ -19,9 +19,12 @@ module.exports.createClothingItem = (req, res, next) => {
     .then((item) => {
       res.send({ data: item });
     })
-    .catch(() => {
-      const err = new BadRequestError('Incorrect data');
-      next(err);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Invalid data'));
+      } else {
+        next(err);
+      }
     });
 };
 

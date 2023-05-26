@@ -29,9 +29,13 @@ module.exports.createUser = (req, res, next) => {
       };
       res.send({ data: newUser });
     })
-    .catch(() => {
-      const err = new ConflictError('Email already in use');
-      next(err);
+    .catch((err) => {
+      console.log(err);
+      if (err.code === 11000) {
+        next(new ConflictError('Email already in use'));
+      } else {
+        next(err);
+      }
     });
 };
 
