@@ -5,7 +5,7 @@ const validateUrl = (value, helpers) => {
   if (validator.isURL(value)) {
     return value;
   }
-  return helpers.error('string uri');
+  return helpers.error('string.uri');
 };
 
 module.exports.validateClothingItemBody = celebrate({
@@ -30,7 +30,6 @@ module.exports.validateUserInfoBody = celebrate({
     name: Joi.string().min(2).max(30).messages({
       'string.min': 'The minimum length of the "name" field is 2',
       'string.max': 'The maximum length of the "name" field is 30',
-      'string.empty': 'The "name" field must be filled in',
     }),
     avatar: Joi.string().required().custom(validateUrl).messages({
       'string.empty': 'The "avatar url" field must be filled in',
@@ -41,6 +40,20 @@ module.exports.validateUserInfoBody = celebrate({
     }),
     password: Joi.string().required().messages({
       'string.empty': 'The "password" field must be filled in',
+    }),
+  }),
+});
+
+module.exports.validateUserProfileInfoBody = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30).required().messages({
+      'string.min': 'The minimum length of the "name" field is 2',
+      'string.max': 'The maximum length of the "name" field is 30',
+      'string.empty': 'The "name" field must be filled in',
+    }),
+    avatar: Joi.string().required().custom(validateUrl).messages({
+      'string.empty': 'The "avatar url" field must be filled in',
+      'string.uri': 'The "avatar url" field must be a valid url',
     }),
   }),
 });

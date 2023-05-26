@@ -1,5 +1,7 @@
 const ClothingItem = require('../models/clothingItem');
-const { ForbiddenError } = require('../utils/ForbiddenError');
+const { BadRequestError } = require('../utils/errors/BadRequestError');
+const { ForbiddenError } = require('../utils/errors/ForbiddenError');
+const { NotFoundError } = require('../utils/errors/NotFoundError');
 
 module.exports.getClothingItems = (req, res, next) => {
   ClothingItem.find({})
@@ -17,14 +19,15 @@ module.exports.createClothingItem = (req, res, next) => {
     .then((item) => {
       res.send({ data: item });
     })
-    .catch((err) => {
+    .catch(() => {
+      const err = new BadRequestError('Incorrect data');
       next(err);
     });
 };
 
 module.exports.deleteClothingItem = (req, res, next) => {
   ClothingItem.findById(req.params.itemId)
-    .orFail()
+    .orFail(new NotFoundError('No item with that id'))
     .then((item) => {
       if (item.owner.toString() === req.user._id) {
         ClothingItem.findByIdAndRemove(item._id)
@@ -52,7 +55,7 @@ module.exports.likeClothingItem = (req, res, next) => {
     },
     { new: true }
   )
-    .orFail()
+    .orFail(new NotFoundError('No item with that id'))
     .then((item) => {
       res.send({ data: item });
     })
@@ -67,7 +70,7 @@ module.exports.dislikeClothingItem = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true }
   )
-    .orFail()
+    .orFail(new NotFoundError('No item with that id'))
     .then((item) => {
       res.send({ data: item });
     })

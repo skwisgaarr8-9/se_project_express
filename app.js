@@ -5,7 +5,7 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 
 const routes = require('./routes/index');
-const { handleError } = require('./utils/errors');
+const { handleError } = require('./utils/handleError');
 const { limiter } = require('./utils/rateLimiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
